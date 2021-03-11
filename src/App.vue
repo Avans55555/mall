@@ -17,5 +17,6 @@ import tabBarMain from "components/content/tabbar/tabBarMain";
 </script>
 
 <style>
+@import "assets/css/base.css";
 
 </style>
