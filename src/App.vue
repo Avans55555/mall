@@ -1,7 +1,8 @@
 <template>
 <div>
-  <keep-alive><router-view></router-view></keep-alive>
-  <tabBarMain></tabBarMain>
+  <keep-alive exclude="Detail"><router-view></router-view></keep-alive>
+  <tabBarMain v-show="this.$route.path.indexOf('detail')==-1"></tabBarMain>
+
 </div>
 </template>
 

@@ -18,6 +18,14 @@
     height: 44px;
     line-height: 44px;
     text-align: center;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+
+
+
   }
   .left, .right{
     width: 60px;

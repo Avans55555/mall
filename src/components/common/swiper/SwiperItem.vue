@@ -8,6 +8,8 @@
 	export default {
 		name: "Slide"
 	}
+
+
 </script>
 
 <style scoped>
