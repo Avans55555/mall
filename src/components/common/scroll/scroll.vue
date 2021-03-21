@@ -67,11 +67,11 @@
 
 <style scoped>
   .wrapper {
-    height: 100vh;
+    /*height: 100vh;*/
     overflow: hidden;
   }
-  .content {
-    padding-top: 15.2px;
-    padding-bottom: 58px;
-  }
+  /*.content {*/
+  /*  padding-top: 15.2px;*/
+  /*  padding-bottom: 58px;*/
+  /*}*/
 </style>

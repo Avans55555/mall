@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item"  v-if="Object.keys(goodsItem).length!==0">
-    <img :src="showImage" alt="" @load="imageLoad" @click="imageClick">
+    <img v-lazy="showImage" alt="" @load="imageLoad" @click="imageClick">
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -27,7 +27,6 @@
       imageClick(){
           if(this.goodsItem.iid){
             this.$router.push('/detail/' + this.goodsItem.iid)
-            console.log(this.goodsItem.iid)
           }
       }
     },

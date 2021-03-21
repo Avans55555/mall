@@ -4,14 +4,12 @@
     <TabControl :titles="['推荐','新款','精选']"
                 @tabClick="tabClick"
                 ref="tabControl1"
-                :class="{a:!isTabFixed}"
-    />
+                v-show="isTabFixed" />
         <scroll class="content" ref="scroll"
                 @scrollPosition="scrollPosition"
                 :probe-type="3"
                 :pull-up-load="true"
-                @pullingUp="loadMore"
-        >
+                @pullingUp="loadMore">
           <HomeSwiper  :banners="banners" @swiperImageLoad="swiperImageLoad"></HomeSwiper>
           <HWHomeRecommend :recommends="recommends"></HWHomeRecommend>
           <feature></feature>
@@ -72,7 +70,7 @@
       this.getHomeGoods('pop')
       this.getHomeGoods('new')
       this.getHomeGoods('sell')
-      // RemoveScroll();
+      RemoveScroll();
     },
 
     activated() {
@@ -143,10 +141,12 @@
 </script>
 
 <style scoped>
-
-  #home {
-
+  #home{
+    height: 100vh;
+    /*overflow: hidden;*/
+    position: relative;
   }
+
   .a{
     opacity: 0;
     position: relative;
@@ -159,6 +159,14 @@
   .home-nav{
     background-color: var(--color-tint);
     color: #fff;
+  }
+
+  .content {
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    left: 0;
+    right: 0;
   }
 
 

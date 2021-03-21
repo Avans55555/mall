@@ -1,7 +1,7 @@
 <template>
   <div class="detail">
     <DetailNavBar @nbClick="nbClick" ref="nav"/>
-    <scroll :pull-up-load="true" ref="scroll" :property="3" @scrollPosition="scrollPosition">
+    <scroll class="content" :pull-up-load="true" ref="scroll" :property="3" @scrollPosition="scrollPosition">
       <detailSwiper :topImg="topImg"></detailSwiper>
       <DetailBaseInfo :goods="goods"/>
       <DetailShopInfo :shop="shop"/>
@@ -12,7 +12,7 @@
     </scroll>
       <BackTop  @click.native="bcClick" v-show="isShow"/>
 
-    <DetailBottomBar />
+    <DetailBottomBar @addToCart="addToCart" />
 
   </div>
 </template>
@@ -32,7 +32,6 @@
   import {debounce} from "common/utils";
   import BackTop from "components/content/backTop/BackTop";
   import {toTopMix} from "common/mixin";
-
   export default {
     name: "Detail",
     data(){
@@ -63,8 +62,7 @@
       DetailComment,
       GoodList,
       DetailBottomBar,
-      BackTop
-
+      BackTop,
     },
     created() {
       //获取iid
@@ -79,7 +77,6 @@
         this.paramInfo=new GoodsParam(data.itemParams.info,data.itemParams.rule)
         if (data.rate.list) {
           this.comment= data.rate.list[0];
-          console.log(this.comment)
         }
       })
       //请求推荐数据
@@ -88,29 +85,30 @@
 
         })
       //
-      this.getThemeTopY=debounce(()=>{
-        this.themeTopY=[]
-        this.themeTopY.push(0)
-        this.themeTopY.push(this.$refs.params.$el.offsetTop)
-        this.themeTopY.push(this.$refs.comment.$el.offsetTop)
-        this.themeTopY.push(this.$refs.recommends.$el.offsetTop)
-        this.themeTopY.push(Number.MAX_VALUE)
-        // console.log(this.$refs.params.$el.offsetTop)
-        // console.log(this.themeTopY)
-      },200)
+
     },
 
     methods:{
+      //导航栏点击跳转
       nbClick(index){
-
-        this.$refs.scroll.toTop(0,-this.themeTopY[index]+44,300)
+        this.$refs.scroll.toTop(0,-this.themeTopY[index] - 35,300)
       },
+      //处理滚动导航栏切换选中
       imgLoad(){
-        this.getThemeTopY()
+            this.themeTopY=[]
+            this.themeTopY.push(0)
+            this.themeTopY.push(this.$refs.params.$el.offsetTop)
+            this.themeTopY.push(this.$refs.comment.$el.offsetTop)
+            this.themeTopY.push(this.$refs.recommends.$el.offsetTop)
+            this.themeTopY.push(Number.MAX_VALUE)
+
+
+
       },
+      //监听滚动
       scrollPosition(position){
         this.isShow = (-position.y)>800
-        const currentTop=-position.y + 44
+        const currentTop=-position.y
         // console.log(currentTop)
         this.themeTopY.forEach((i,index)=>{
           //将position.y和[0, 6045, 7109, 7350]作对比
@@ -126,6 +124,26 @@
         })
 
       },
+      //添加购物车
+      addToCart(){
+        const product={}
+        product.image=this.topImg[0]
+        product.title=this.goods.title
+        product.desc=this.goods.desc
+        product.price=this.goods.realPrice
+        product.iid=this.iid
+        //将对象传给 vuex的 mutations
+        this.$store.dispatch('addCard',product).then(res=>{
+          //   this.message=res
+          //   this.isSShow=true
+          // setTimeout(()=>{
+          //   this.isSShow=false
+          // },1500)
+          // this.$toast.show(res,1500)
+          this.$toast.show(res,1500)
+        })
+
+      }
     }
 
 
@@ -133,5 +151,17 @@
 </script>
 
 <style scoped>
+.detail{
+  height: 100vh;
+  position: relative;
+}
+
+.content {
+  position: absolute;
+  top: 44px;
+  bottom: 58px;
+  left: 0;
+  right: 0;
+}
 
 </style>

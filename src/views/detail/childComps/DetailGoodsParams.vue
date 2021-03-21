@@ -35,7 +35,6 @@
       }
     },
     created() {
-      console.log(this.paramInfo)
     }
   }
 </script>

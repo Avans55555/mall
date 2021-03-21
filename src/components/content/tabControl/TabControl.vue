@@ -1,7 +1,7 @@
 <template>
-  <div id="tabControl">
+  <div class="tab-control">
     <div v-for="(item,index) in titles"
-         class="tc-item"
+         class="tab-control-item"
          @click="tcItemClick(index)"
          :class="{active:index === currentIndex}"
     >
@@ -36,22 +36,27 @@
 </script>
 
 <style scoped>
-#tabControl{
-  display: flex;
-  justify-content: space-evenly;
-  font-size: 15px;
-  position: sticky;
-  top: 44px;
-  background-color: #fff;
-  z-index: 2;
-
-}
-  .tc-item{
-    padding:5px;
+  .tab-control {
+    display: flex;
+    text-align: center;
+    line-height: 40px;
+    font-size: 15px;
+    background-color: #fff;
   }
-  .active{
+
+  .tab-control-item {
+    flex: 1;
+  }
+
+  .tab-control-item span {
+    padding: 5px;
+  }
+
+  .active {
     color: var(--color-high-text);
-    padding:5px;
+  }
+
+  .tab-control-item.active span {
     border-bottom: 2px solid var(--color-high-text);
   }
 </style>
